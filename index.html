@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>gridmind</title>
-    <script type="module" crossorigin src="./assets/index-BT4_vS-N.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-vgacAGU-.css">
+    <script type="module" crossorigin src="./assets/index-Dfh7c-LF.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CtWUP82p.css">
   </head>
   <body>
     <main>
@@ -24,24 +24,8 @@
       </nav>
 
       <section id="solver-view" class="layout">
-        <div>
+        <div class="board-column">
           <div id="grid" class="grid" role="grid" aria-label="Sudoku grid"></div>
-          <div id="numpad" class="numpad" role="group" aria-label="Number entry">
-            <div class="numpad-head">
-              <span id="numpad-label" class="numpad-label">Select a cell</span>
-              <span class="history">
-                <button id="undo" type="button" title="Undo (Cmd/Ctrl+Z)"
-                        aria-label="Undo">↶</button>
-                <button id="redo" type="button" title="Redo (Cmd/Ctrl+Shift+Z)"
-                        aria-label="Redo">↷</button>
-                <button id="numpad-dismiss" type="button" class="numpad-dismiss">
-                  Done
-                </button>
-              </span>
-            </div>
-            <div id="numpad-keys" class="numpad-keys"></div>
-          </div>
-
           <p class="hint">
             Tap a cell, then a number. On a keyboard, 1–9 types, Backspace
             clears, arrow keys move, Escape deselects.
@@ -49,6 +33,32 @@
         </div>
 
         <aside class="panel">
+          <div class="panel-tabs" role="tablist">
+            <button id="pane-tab-keypad" type="button" class="tab active"
+                    role="tab">Keypad</button>
+            <button id="pane-tab-puzzle" type="button" class="tab"
+                    role="tab">Puzzle</button>
+          </div>
+
+          <div id="pane-keypad" class="panel-pane" role="tabpanel">
+            <div id="numpad" class="numpad" role="group" aria-label="Number entry">
+              <div class="numpad-head">
+                <span id="numpad-label" class="numpad-label">Select a cell</span>
+                <span class="history">
+                  <button id="undo" type="button" title="Undo (Cmd/Ctrl+Z)"
+                          aria-label="Undo">↶</button>
+                  <button id="redo" type="button" title="Redo (Cmd/Ctrl+Shift+Z)"
+                          aria-label="Redo">↷</button>
+                  <button id="numpad-dismiss" type="button" class="numpad-dismiss">
+                    Clear
+                  </button>
+                </span>
+              </div>
+              <div id="numpad-keys" class="numpad-keys"></div>
+            </div>
+          </div>
+
+          <div id="pane-puzzle" class="panel-pane hidden" role="tabpanel">
           <label class="field">
             <span>Puzzle library</span>
             <select id="puzzle-select"></select>
@@ -79,6 +89,8 @@
             <textarea id="puzzle-input" rows="3" spellcheck="false"></textarea>
             <button id="load" type="button">Load</button>
           </details>
+
+          </div>
 
           <pre id="stats" class="stats" aria-live="polite"></pre>
         </aside>
