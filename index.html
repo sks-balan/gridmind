@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>gridmind</title>
-    <script type="module" crossorigin src="./assets/index-CKqX5GGd.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Cxc3ypBZ.css">
+    <script type="module" crossorigin src="./assets/index-WEeKqt_1.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-vgacAGU-.css">
   </head>
   <body>
     <main>
@@ -26,8 +26,25 @@
       <section id="solver-view" class="layout">
         <div>
           <div id="grid" class="grid" role="grid" aria-label="Sudoku grid"></div>
+          <div id="numpad" class="numpad" role="group" aria-label="Number entry">
+            <div class="numpad-head">
+              <span id="numpad-label" class="numpad-label">Select a cell</span>
+              <span class="history">
+                <button id="undo" type="button" title="Undo (Cmd/Ctrl+Z)"
+                        aria-label="Undo">↶</button>
+                <button id="redo" type="button" title="Redo (Cmd/Ctrl+Shift+Z)"
+                        aria-label="Redo">↷</button>
+                <button id="numpad-dismiss" type="button" class="numpad-dismiss">
+                  Done
+                </button>
+              </span>
+            </div>
+            <div id="numpad-keys" class="numpad-keys"></div>
+          </div>
+
           <p class="hint">
-            Click a cell and type 1–9. Backspace clears. Arrow keys move.
+            Tap a cell, then a number. On a keyboard, 1–9 types, Backspace
+            clears, arrow keys move, Escape deselects.
           </p>
         </div>
 
