@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gridmind</title>
+    <script type="module" crossorigin src="./assets/index-DdFgXylk.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CLrzWsG2.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>gridmind</h1>
+        <p class="subtitle">
+          Constraint propagation and search, running entirely in your browser.
+        </p>
+      </header>
+
+      <nav class="views">
+        <button id="view-solver" type="button" class="view active">Solver</button>
+        <button id="view-lessons" type="button" class="view">Lessons</button>
+        <button id="view-docs" type="button" class="view">Docs</button>
+        <button id="view-code" type="button" class="view">Code</button>
+      </nav>
+
+      <section id="solver-view" class="layout">
+        <div>
+          <div id="grid" class="grid" role="grid" aria-label="Sudoku grid"></div>
+          <p class="hint">
+            Click a cell and type 1–9. Backspace clears. Arrow keys move.
+          </p>
+        </div>
+
+        <aside class="panel">
+          <label class="field">
+            <span>Puzzle library</span>
+            <select id="puzzle-select"></select>
+          </label>
+
+          <div class="buttons">
+            <button id="prev" type="button" title="Previous puzzle">◀</button>
+            <button id="next" type="button" title="Next puzzle">▶</button>
+            <button id="random" type="button">Random</button>
+            <button id="empty" type="button">Empty grid</button>
+          </div>
+
+          <p id="puzzle-meta" class="puzzle-meta"></p>
+
+          <div class="buttons">
+            <button id="solve" type="button" class="primary">Solve</button>
+            <button id="animate" type="button">Animate</button>
+            <button id="reset" type="button">Reset</button>
+          </div>
+
+          <label class="toggle">
+            <input id="show-candidates" type="checkbox" />
+            <span>Show candidates after propagation</span>
+          </label>
+
+          <details class="custom">
+            <summary>Paste your own</summary>
+            <textarea id="puzzle-input" rows="3" spellcheck="false"></textarea>
+            <button id="load" type="button">Load</button>
+          </details>
+
+          <pre id="stats" class="stats" aria-live="polite"></pre>
+        </aside>
+      </section>
+
+      <section id="lessons-view" class="lessons hidden">
+        <nav id="lesson-list" class="lesson-nav" aria-label="Lessons"></nav>
+        <div id="lesson-content" class="lesson-content"></div>
+      </section>
+
+      <section id="docs-view" class="lessons hidden">
+        <nav id="docs-list" class="lesson-nav" aria-label="Documents"></nav>
+        <div id="docs-content" class="lesson-content"></div>
+      </section>
+
+      <section id="code-view" class="lessons hidden">
+        <nav id="code-list" class="lesson-nav" aria-label="Source files"></nav>
+        <div id="code-content" class="lesson-content"></div>
+      </section>
+    </main>
+
+  </body>
+</html>
