@@ -3,55 +3,87 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>gridmind</title>
-    <script type="module" crossorigin src="./assets/index-C7P9b2hu.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DLB7NosL.css">
+    <meta name="theme-color" content="#2563c9" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="gridmind" />
+    <meta
+      name="description"
+      content="Play Sudoku and learn how constraint solving and machine learning reason."
+    />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <title>gridmind — play, solve, learn</title>
+    <script type="module" crossorigin src="./assets/index-qhgrxtms.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Bsitko80.css">
   </head>
   <body>
     <main>
       <header>
-        <h1>gridmind</h1>
-        <p class="subtitle">
-          Constraint propagation and search, running entirely in your browser.
-        </p>
+        <div class="brand-row">
+          <h1>gridmind</h1>
+          <button id="install-app" type="button" class="quiet-button">Install app</button>
+        </div>
+        <p class="subtitle">Play Sudoku. See how machines reason. Learn by doing.</p>
       </header>
 
-      <nav class="views">
-        <button id="view-solver" type="button" class="view active">Solver</button>
-        <button id="view-lessons" type="button" class="view">Lessons</button>
+      <nav class="views" aria-label="Main navigation">
+        <button id="view-solver" type="button" class="view active">Play</button>
+        <button id="view-lessons" type="button" class="view">Learn</button>
         <button id="view-docs" type="button" class="view">Docs</button>
         <button id="view-code" type="button" class="view">Code</button>
       </nav>
 
+      <div id="context-nav" class="context-nav" hidden>
+        <button id="context-back" type="button">← Back</button>
+        <span id="context-location"></span>
+      </div>
+
       <section id="solver-view" class="layout">
         <div class="board-column">
-          <div id="grid" class="grid" role="grid" aria-label="Sudoku grid"></div>
+          <div class="game-bar">
+            <div>
+              <strong id="game-title">Loading puzzle…</strong>
+              <span id="game-progress" class="game-progress"></span>
+            </div>
+            <button id="help" type="button" class="quiet-button">How to play</button>
+          </div>
+          <div
+            id="grid"
+            class="grid"
+            role="grid"
+            aria-label="Sudoku grid"
+            aria-describedby="grid-instructions"
+          ></div>
           <p class="hint">
-            Tap a cell, then a number. On a keyboard, 1–9 types, Backspace
-            clears, arrow keys move, Escape deselects.
+            <span id="grid-instructions">Select a cell, then enter a number. Use Notes for pencil marks.</span>
+            Keyboard: 1–9, Backspace, arrow keys, N for notes, and Cmd/Ctrl+Z.
           </p>
         </div>
 
-        <aside class="panel">
-          <div class="panel-tabs" role="tablist">
+        <aside class="panel" aria-label="Game controls">
+          <div class="panel-tabs" role="tablist" aria-label="Game control panels">
             <button id="pane-tab-keypad" type="button" class="tab active"
-                    role="tab">Keypad</button>
+                    role="tab" aria-selected="true" aria-controls="pane-keypad">Keypad</button>
             <button id="pane-tab-puzzle" type="button" class="tab"
-                    role="tab">Puzzle</button>
+                    role="tab" aria-selected="false" aria-controls="pane-puzzle"
+                    tabindex="-1">Puzzle</button>
           </div>
 
-          <div id="pane-keypad" class="panel-pane" role="tabpanel">
+          <div id="pane-keypad" class="panel-pane" role="tabpanel"
+               aria-labelledby="pane-tab-keypad">
             <div id="numpad" class="numpad" role="group" aria-label="Number entry">
               <div class="numpad-head">
                 <span id="numpad-label" class="numpad-label">Select a cell</span>
                 <span class="history">
+                  <button id="note-mode" type="button" title="Toggle notes (N)"
+                          aria-pressed="false">Notes</button>
                   <button id="undo" type="button" title="Undo (Cmd/Ctrl+Z)"
                           aria-label="Undo">↶</button>
                   <button id="redo" type="button" title="Redo (Cmd/Ctrl+Shift+Z)"
                           aria-label="Redo">↷</button>
-                  <button id="numpad-dismiss" type="button" class="numpad-dismiss">
-                    Clear
-                  </button>
                 </span>
               </div>
               <div id="numpad-keys" class="numpad-keys"></div>
@@ -66,43 +98,87 @@
             </div>
           </div>
 
-          <div id="pane-puzzle" class="panel-pane hidden" role="tabpanel">
+          <div id="pane-puzzle" class="panel-pane" role="tabpanel"
+               aria-labelledby="pane-tab-puzzle" hidden>
           <label class="field">
             <span>Puzzle library</span>
             <select id="puzzle-select"></select>
           </label>
 
           <div class="buttons">
-            <button id="prev" type="button" title="Previous puzzle">◀</button>
-            <button id="next" type="button" title="Next puzzle">▶</button>
-            <button id="random" type="button">Random</button>
+            <button id="prev" type="button" title="Previous puzzle"
+                    aria-label="Previous puzzle">◀</button>
+            <button id="next" type="button" title="Next puzzle"
+                    aria-label="Next puzzle">▶</button>
+            <button id="random" type="button">New random puzzle</button>
             <button id="empty" type="button">Empty grid</button>
           </div>
 
           <p id="puzzle-meta" class="puzzle-meta"></p>
 
           <div class="buttons">
-            <button id="solve" type="button" class="primary">Solve</button>
-            <button id="animate" type="button">Animate</button>
-            <button id="reset" type="button">Reset</button>
+            <button id="solve" type="button" class="primary">Show solution</button>
+            <button id="animate" type="button">Watch solver</button>
+            <button id="reset" type="button">Restart</button>
           </div>
 
           <label class="toggle">
             <input id="show-candidates" type="checkbox" />
-            <span>Show candidates after propagation</span>
+            <span>Show automatic candidates</span>
           </label>
 
           <details class="custom">
-            <summary>Paste your own</summary>
+            <summary>Load a puzzle string</summary>
             <textarea id="puzzle-input" rows="3" spellcheck="false"></textarea>
-            <button id="load" type="button">Load</button>
+            <button id="load" type="button">Load puzzle</button>
           </details>
 
           </div>
 
-          <pre id="stats" class="stats" aria-live="polite"></pre>
+          <pre id="stats" class="stats" role="status" aria-live="polite"></pre>
         </aside>
       </section>
+
+      <dialog id="help-dialog" class="help-dialog" aria-labelledby="help-title">
+        <form method="dialog">
+          <div class="dialog-head">
+            <h2 id="help-title">How to play</h2>
+            <button value="close" aria-label="Close help">×</button>
+          </div>
+          <p>Fill every row, column, and 3×3 box with the digits 1–9, without repeats.</p>
+          <h3>Controls</h3>
+          <ul>
+            <li>Select a cell, then choose a number or type 1–9.</li>
+            <li>Turn on <strong>Notes</strong> to add or remove pencil marks.</li>
+            <li>Conflicting entries are highlighted immediately. Undo and redo are always available.</li>
+          </ul>
+          <h3>Hints that teach</h3>
+          <p>
+            Hint starts with deductions you can prove. If you reach a dead end, it explains
+            where to backtrack instead of silently replacing your work.
+          </p>
+          <h3>Solver tools</h3>
+          <p>
+            Open the Puzzle panel to reveal a solution, watch propagation and search, load
+            another puzzle, or start from an empty grid.
+          </p>
+          <button value="close" class="primary dialog-done">Start playing</button>
+        </form>
+      </dialog>
+
+      <dialog id="install-dialog" class="help-dialog" aria-labelledby="install-title">
+        <form method="dialog">
+          <div class="dialog-head">
+            <h2 id="install-title">Install Gridmind</h2>
+            <button value="close" aria-label="Close install instructions">×</button>
+          </div>
+          <div id="install-instructions"></div>
+          <button id="install-confirm" type="button" class="primary dialog-done" hidden>
+            Install Gridmind
+          </button>
+          <button value="close" class="dialog-done">Done</button>
+        </form>
+      </dialog>
 
       <section id="lessons-view" class="lessons hidden">
         <nav id="lesson-list" class="lesson-nav" aria-label="Lessons"></nav>

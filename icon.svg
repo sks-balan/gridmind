@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="gridmind">
+  <rect width="512" height="512" fill="#2563c9"/>
+  <g fill="none" stroke="#fff" stroke-linecap="round">
+    <rect x="88" y="88" width="336" height="336" rx="12" stroke-width="16"/>
+    <path d="M125 88v336M163 88v336M237 88v336M275 88v336M349 88v336M387 88v336M88 125h336M88 163h336M88 237h336M88 275h336M88 349h336M88 387h336" stroke-width="4" opacity=".65"/>
+    <path d="M200 88v336M312 88v336M88 200h336M88 312h336" stroke-width="11"/>
+  </g>
+  <g fill="#fff" font-family="ui-sans-serif,system-ui,sans-serif" font-size="42" font-weight="700" text-anchor="middle">
+    <text x="144" y="159">3</text><text x="368" y="271">7</text><text x="256" y="383">9</text>
+  </g>
+</svg>
