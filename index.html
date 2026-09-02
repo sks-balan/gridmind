@@ -16,8 +16,8 @@
     <link rel="icon" href="./icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
     <title>gridmind — play, solve, learn</title>
-    <script type="module" crossorigin src="./assets/index-BhktSe52.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Bsitko80.css">
+    <script type="module" crossorigin src="./assets/index-C74Q9zaM.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Dyrlg9WG.css">
   </head>
   <body>
     <main>
@@ -118,9 +118,43 @@
 
           <div class="buttons">
             <button id="solve" type="button" class="primary">Show solution</button>
-            <button id="animate" type="button">Watch solver</button>
             <button id="reset" type="button">Restart</button>
           </div>
+
+          <section class="replay-panel" aria-labelledby="replay-title">
+            <div class="replay-head">
+              <div>
+                <h3 id="replay-title">Solver replay</h3>
+                <p>Review a complete solution path. Use Hint while solving it yourself.</p>
+              </div>
+              <output id="replay-progress">Ready</output>
+            </div>
+
+            <div class="replay-controls" role="group" aria-label="Solver replay controls">
+              <button id="replay-start" type="button" title="Return to the start" disabled>Start</button>
+              <button id="replay-previous" type="button" title="Show the previous step" disabled>Previous</button>
+              <button id="replay-next" type="button" class="primary" title="Show the next step">Next</button>
+              <button id="replay-run" type="button" title="Run or pause the replay">Run</button>
+              <button id="replay-finish" type="button" title="Jump to the completed solution">Finish</button>
+            </div>
+
+            <label class="replay-speed">
+              <span>Run speed</span>
+              <select id="replay-speed">
+                <option value="1400">Slow</option>
+                <option value="850" selected>Normal</option>
+                <option value="350">Fast</option>
+              </select>
+            </label>
+
+            <article id="replay-explanation" class="replay-explanation" aria-live="polite">
+              <span id="replay-technique" class="replay-technique">How it thinks</span>
+              <strong id="replay-step-title">Ready for the first step</strong>
+              <p id="replay-step-body">
+                Choose Next for one explained move, Run for automatic playback, or Finish to jump to the answer.
+              </p>
+            </article>
+          </section>
 
           <label class="toggle">
             <input id="show-candidates" type="checkbox" />
@@ -155,12 +189,29 @@
           <h3>Hints that teach</h3>
           <p>
             Hint starts with deductions you can prove. If you reach a dead end, it explains
-            where to backtrack instead of silently replacing your work.
+            where to backtrack instead of silently replacing your work. Apply performs that
+            one move but keeps you in control of your own game.
           </p>
-          <h3>Solver tools</h3>
+          <h3>A repeatable solving loop</h3>
+          <ol>
+            <li>Choose an empty cell and list the digits 1–9 that might fit.</li>
+            <li>Cross out every digit already used in the same row, column, or 3×3 box.</li>
+            <li>If one candidate remains, place it: that is a <strong>naked single</strong>.</li>
+            <li>Scan each row, column, and box. If a digit has only one possible home, place that <strong>hidden single</strong>.</li>
+            <li>Repeat the scans after every placement, because one move can unlock another.</li>
+          </ol>
           <p>
-            Open the Puzzle panel to reveal a solution, watch propagation and search, load
-            another puzzle, or start from an empty grid.
+            If logic stalls, choose the empty cell with the fewest candidates, try one as a
+            reversible assumption, and keep applying the loop. A contradiction means undo
+            that branch and try its next candidate. The guess is controlled, never random.
+          </p>
+          <h3>Solver replay</h3>
+          <p>
+            Replay is different from Hint: it takes over the board to review a complete solver
+            path. Open the Puzzle panel and use Next or Previous to study one move at a time.
+            Run plays at the selected speed, Pause keeps your place, and Finish jumps to the
+            completed board. Blue digits are deductions; orange digits are reversible guesses.
+            The explanation below the controls names the technique and its reason.
           </p>
           <button value="close" class="primary dialog-done">Start playing</button>
         </form>
@@ -196,8 +247,22 @@
       </section>
     </main>
 
-    <footer class="version">
-      <span id="version"></span>
+    <footer class="site-footer">
+      <details class="release-notes">
+        <summary>What’s new in v0.2.0</summary>
+        <div>
+          <h2>Release notes</h2>
+          <p><strong>Solver replay and explanations</strong></p>
+          <ul>
+            <li>Move forward or backward one solver step at a time.</li>
+            <li>Run, pause, change speed, return to the start, or finish immediately.</li>
+            <li>See a plain-language reason for every deduction, guess, contradiction, and backtrack.</li>
+            <li>Use the new How to Play mental model to solve systematically by hand.</li>
+            <li>Stage 8 now teaches solver visualization and verified local inference—not website-building mechanics.</li>
+          </ul>
+        </div>
+      </details>
+      <span id="version" class="version"></span>
     </footer>
 
   </body>
